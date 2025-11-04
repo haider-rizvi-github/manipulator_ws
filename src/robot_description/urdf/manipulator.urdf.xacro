@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+
+<!-- <robot>  </robot> tags are the root elements of the URDF -->
+<!-- Name of the robot is "manipulator" -->
+
+<robot name="manipulator" xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- Creating the variables -->
+    <xacro:property name="PI" value="3.14159"/>
+    <xacro:property name="effort" value="30.0"/> 
+    <xacro:property name="velocity" value="10.0"/>
+
+    <!-- Define the robot's links and joints -->
+     <link name="world"/>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="-0.5 -0.5 0.0" rpy="0.0 0.0 0.0"/>
+            
+            <geometry>
+                <mesh filename="package://robot_description/meshes/basement.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+   
+    <!--2nd part-->
+    <link name="base_plate">
+        <visual>
+            <origin xyz="-0.36 -0.40 -0.56" rpy="0 0 0"/>
+            <geometry>
+               <mesh filename="package://robot_description/meshes/base_plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <!--3rd part-->
+    <link name="forward_drive_arm">
+        <visual>
+            <origin xyz="0.19 0.06 -0.08" rpy="0 -${PI/2} ${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <!--4th part -->
+    <link name="horizontal_arm">
+        <visual>
+            <origin xyz="-0.03 -0.4 -0.06" rpy="${PI/2} 0 ${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <!-- 5th part -->
+    <link name="claw_support">
+        <visual>
+            <origin xyz="0.0 -0.05 -0.15" rpy="0 0 ${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/claw_support.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <!-- gripper fingers -->
+    <link name="gripper_finger_left">
+        <visual>
+            <origin xyz="-0.04 0.5 -0.1" rpy="0 0 -${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/left_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+    <link name="gripper_finger_right">
+        <visual>
+            <origin xyz="-0.1 0.5 -0.1" rpy="0 0 -${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/right_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="rgb_camera">
+        <visual>
+            <origin xyz="-0.09 0.13 0.13" rpy="-${PI*0.4888888889} 0 -${PI*0.5}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+ <!-- Defining the joints between the links -->
+
+    <!-- World to basement joint -->
+    <joint name="virtual_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Basement to base_plate joint -->
+    <joint name="basement_to_base_plate" type="revolute">
+        <parent link="base_link"/>
+        <child link="base_plate"/>
+        <axis xyz="0 0 1"/>     <!-- Rotation around Z-axis -->
+        <origin xyz="0 0 0.307" rpy="0 0 0"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>  <!-- Joint limits: upper(90 degrees) and lower(-90 degree) are angles in radians -->
+    </joint>
+
+    <!-- Base_plate to forward_drive_arm joint -->
+    <joint name="base_plate_to_forward_drive_arm" type="revolute">
+        <parent link="base_plate"/>
+        <child link="forward_drive_arm"/>
+        <axis xyz="1 0 0"/>     <!-- Rotation around X-axis -->
+        <origin xyz="-0.02 0.0 0.35" rpy="0 0 0"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>  <!-- Joint limits: upper(90 degrees) and lower(-90 degree) are angles in radians -->
+    </joint>
+
+    <!-- Forward_drive_arm to horizontal_arm joint -->
+    <joint name="forward_drive_arm_to_horizontal_arm" type="revolute">
+        <parent link="forward_drive_arm"/>
+        <child link="horizontal_arm"/>
+        <axis xyz="1 0 0"/>     <!-- Rotation around X-axis -->
+        <origin xyz="0.0 0.0 0.8" rpy="0 0 0"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>  <!-- Joint limits: upper(90 degrees) and lower(-90 degree) are angles in radians -->
+    </joint>
+
+    <!-- Horizontal_arm to claw_support joint -->
+    <joint name="horizontal_arm_to_claw_support" type="fixed">
+        <parent link="horizontal_arm"/>
+        <child link="claw_support"/>
+        <origin xyz="0.0 0.82 0.0" rpy="0 0 0"/>
+        <!-- add limits to restrict the collision -->
+    </joint>
+
+    <!-- Claw_support to gripper_finger_left joint -->
+    <joint name="claw_support_to_gripper_finger_left" type="revolute">
+        <parent link="claw_support"/>
+        <child link="gripper_finger_left"/>
+        <origin xyz="-0.22 0.13 -0.1" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/> <!-- Rotation around Z-axis -->
+        <limit lower="0.0" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
+    </joint>
+
+    <!-- Claw_support to gripper_finger_right joint -->
+    <joint name="claw_support_to_gripper_finger_right" type="revolute">
+        <parent link="claw_support"/>
+        <child link="gripper_finger_right"/>    
+        <origin xyz="0.04 0.13 -0.01" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/> <!-- Rotation around Z-axis --> 
+        <mimic joint="claw_support_to_gripper_finger_left" multiplier="-1.0"/>
+        <limit lower="-${PI/2}" upper="0.0" effort="${effort}" velocity="${velocity}"/>
+    </joint>
+
+    <!-- base_link to rgb_camera joint -->
+    <joint name="rgb_camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="rgb_camera"/>
+        <origin xyz="0.0 0.45 0.2" rpy="0 -0.5 1.57"/>
+    </joint>
+
+    
+</robot>
