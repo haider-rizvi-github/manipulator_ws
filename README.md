@@ -1,6 +1,6 @@
 # Robot Manipulator Project
 
-This repository contains a ROS2 project for a robot manipulator with visualization capabilities. The project includes both C++ and Python examples, along with a complete URDF description of the robot.
+This repository contains a ROS2 project for a robot manipulator with visualization capabilities. The project includes both C++ and Python examples for simple publisher subscriber and parameter, along with a complete URDF description of the robot.
 
 ## Project Structure
 
@@ -39,7 +39,7 @@ cd ~/manipulator_ws/src
 
 2. Clone this repository:
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/haider-rizvi-github/manipulator_ws
 ```
 
 3. Build the workspace:
@@ -50,7 +50,7 @@ colcon build
 
 4. Source the workspace:
 ```bash
-source ~/manipulator_ws/install/setup.bash
+source install/setup.bash
 ```
 
 ## Usage
@@ -72,19 +72,13 @@ This will launch:
 #### Python Examples
 - Simple Publisher
 - Simple Subscriber
-- Parameter Handling
+- Simple Parameter
 
 To run Python examples:
 ```bash
-ros2 run arduinobot_py_examples <example_name>
-```
-
-#### C++ Examples
-The C++ examples demonstrate basic ROS2 concepts and robot control.
-
-To run C++ examples:
-```bash
-ros2 run arduinobot_cpp_examples <example_name>
+ros2 run arduinobot_py_examples simple_publsiher
+ros2 run arduinobot_py_examples simple_subscriber
+ros2 run arduinobot_py_examples simple_parameter
 ```
 
 ## Robot Description
@@ -106,11 +100,6 @@ Joint configuration:
 
 Feel free to open issues and pull requests for any improvements or bug fixes.
 
-## License
-
-[Add your license information here]
-
 ## Acknowledgments
 
 - ROS2 Community
-- [Add any other acknowledgments]
