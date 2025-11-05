@@ -31,24 +31,18 @@ sudo apt install -y \
 
 ## Installation
 
-1. Create a ROS2 workspace:
-```bash
-mkdir -p ~/manipulator_ws/src
-cd ~/manipulator_ws/src
-```
-
-2. Clone this repository:
+1. Clone this repository:
 ```bash
 git clone https://github.com/haider-rizvi-github/manipulator_ws
 ```
 
-3. Build the workspace:
+2. Build the workspace:
 ```bash
 cd ~/manipulator_ws
 colcon build
 ```
 
-4. Source the workspace:
+3. Source the workspace:
 ```bash
 source install/setup.bash
 ```
