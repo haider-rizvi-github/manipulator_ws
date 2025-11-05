@@ -9,13 +9,22 @@
     <xacro:property name="effort" value="30.0"/> 
     <xacro:property name="velocity" value="10.0"/>
 
+    <xacro:macro name="default_inertia" params="mass">      <!--only change the mass -->
+        <inertial>
+            <mass value="${mass}"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+    </xacro:macro>
+
     <!-- Define the robot's links and joints -->
      <link name="world"/>
 
     <link name="base_link">
+        <!-- Using macro file instead of whole inertial tag making it reusable -->
+        <xacro:default_inertia mass="1.0"/>
+
         <visual>
             <origin xyz="-0.5 -0.5 0.0" rpy="0.0 0.0 0.0"/>
-            
             <geometry>
                 <mesh filename="package://robot_description/meshes/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
@@ -23,10 +32,19 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.5 -0.5 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/basement.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
     </link>
    
     <!--2nd part-->
     <link name="base_plate">
+
+        <xacro:default_inertia mass="0.1"/>
+
         <visual>
             <origin xyz="-0.36 -0.40 -0.56" rpy="0 0 0"/>
             <geometry>
@@ -36,10 +54,19 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.36 -0.40 -0.56" rpy="0 0 0"/>
+            <geometry>
+               <mesh filename="package://robot_description/meshes/base_plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
     </link>
 
     <!--3rd part-->
     <link name="forward_drive_arm">
+
+        <xacro:default_inertia mass="0.1"/>
+
         <visual>
             <origin xyz="0.19 0.06 -0.08" rpy="0 -${PI/2} ${PI/2}"/>
             <geometry>
@@ -49,10 +76,19 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="0.19 0.06 -0.08" rpy="0 -${PI/2} ${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
     </link>
 
     <!--4th part -->
     <link name="horizontal_arm">
+
+        <xacro:default_inertia mass="0.1"/>
+
         <visual>
             <origin xyz="-0.03 -0.4 -0.06" rpy="${PI/2} 0 ${PI/2}"/>
             <geometry>
@@ -62,10 +98,19 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.03 -0.4 -0.06" rpy="${PI/2} 0 ${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
     </link>
 
     <!-- 5th part -->
     <link name="claw_support">
+
+        <xacro:default_inertia mass="0.05"/>
+
         <visual>
             <origin xyz="0.0 -0.05 -0.15" rpy="0 0 ${PI/2}"/>
             <geometry>
@@ -75,10 +120,19 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="0.0 -0.05 -0.15" rpy="0 0 ${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/claw_support.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>    
     </link>
 
     <!-- gripper fingers -->
     <link name="gripper_finger_left">
+
+        <xacro:default_inertia mass="0.01"/>
+
         <visual>
             <origin xyz="-0.04 0.5 -0.1" rpy="0 0 -${PI/2}"/>
             <geometry>
@@ -88,8 +142,18 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.04 0.5 -0.1" rpy="0 0 -${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/left_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
     </link>
+
     <link name="gripper_finger_right">
+
+        <xacro:default_inertia mass="0.01"/>
+
         <visual>
             <origin xyz="-0.1 0.5 -0.1" rpy="0 0 -${PI/2}"/>
             <geometry>
@@ -99,9 +163,16 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.1 0.5 -0.1" rpy="0 0 -${PI/2}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/right_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
     </link>
 
     <link name="rgb_camera">
+        <xacro:default_inertia mass="0.01"/>
         <visual>
             <origin xyz="-0.09 0.13 0.13" rpy="-${PI*0.4888888889} 0 -${PI*0.5}"/>
             <geometry>
@@ -111,6 +182,12 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.09 0.13 0.13" rpy="-${PI*0.4888888889} 0 -${PI*0.5}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
     </link>
 
  <!-- Defining the joints between the links -->
