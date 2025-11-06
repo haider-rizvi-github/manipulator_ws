@@ -27,12 +27,16 @@ def generate_launch_description():
     robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",  # name of the executable
-        parameters=[{"robot_description": robot_description}],
+        parameters=[
+            {"robot_description": robot_description},
+            # {"use_sim_time": LaunchConfiguration("use_sim_time")},
+        ],
     )
 
     joint_state_publisher = Node(
         package="joint_state_publisher_gui",
         executable="joint_state_publisher_gui",
+        # parameters=[{"use_sim_time": LaunchConfiguration("use_sim_time")}],
     )
 
     rviz_node = Node(
@@ -40,8 +44,14 @@ def generate_launch_description():
         executable="rviz2",
         name="rviz2",
         output="screen",
+        # parameters=[{"use_sim_time": LaunchConfiguration("use_sim_time")}],
         # Add RViz configuration file if you have saved a file previously
-        # arguments=['-d', os.path.join(get_package_share_directory("robot_description"),"rviz","display.rviz")], # Path to default RViz config file
+        arguments=[
+            "-d",
+            os.path.join(
+                get_package_share_directory("robot_description"), "rviz", "rviz.rviz"
+            ),
+        ],  # Path to default RViz config file
     )
 
     return LaunchDescription(
