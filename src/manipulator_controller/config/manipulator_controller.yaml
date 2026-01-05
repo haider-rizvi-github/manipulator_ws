@@ -1,0 +1,47 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 10 # Hz
+    use_sim_time: true
+
+    # initialize controllers
+    arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    gripper_controller:
+      #type: joint_trajectory_controller/JointTrajectoryController
+      type: forward_command_controller/ForwardCommandController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+# Controller specific parameters
+arm_controller:
+  ros__parameters:
+    joints:
+      - basement_to_base_plate
+      - base_plate_to_forward_drive_arm
+      - forward_drive_arm_to_horizontal_arm
+
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    open_loop_control: true                      # it is because a real motor wil not be able provide the position of the robot
+    allow_integration_in_goal_trajectories: true
+
+gripper_controller:
+  ros__parameters:
+    joints:
+      - claw_support_to_gripper_finger_left            # we dont need to add claw_support_to_gripper_finger_right as it is going to mimic claw_support_to_gripper_finger_left
+
+    interface_name: position
+      
+
+   # command_interfaces:
+   #   - position
+   # state_interfaces:
+   #   - position
+
+   # open_loop_control: true                      # it is because a real motor wil not be able provide the position of the robot
+   # allow_integration_in_goal_trajectories: true

@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rgb_camera">
+
+  <!--
+    Usage example in your main xacro:
+      <xacro:include filename="$(find your_pkg)/urdf/camera.xacro"/>
+
+      <xacro:gz_camera
+          parent_link="base_link"
+          camera_name="front_camera"
+          x="0.2" y="0.0" z="0.3"
+          roll="0.0" pitch="0.0" yaw="0.0" />
+  -->
+
+  <xacro:macro name="gz_camera"
+               params="parent_link
+                       camera_name:=camera
+                       x:=0.0 y:=0.0 z:=0.0
+                       roll:=0.0 pitch:=0.0 yaw:=0.0">
+
+    <!-- Base camera body link -->
+    <link name="rgb_camera">
+        <xacro:default_inertia mass="0.01"/>
+        <visual>
+            <origin xyz="-0.09 0.13 0.13" rpy="-${PI*0.4888888889} 0 -${PI*0.5}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="-0.09 0.13 0.13" rpy="-${PI*0.4888888889} 0 -${PI*0.5}"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Fixed joint from parent link to camera link -->
+    <joint name="rgb_camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="rgb_camera"/>
+        <origin xyz="0.0 0.45 0.2" rpy="0 -0.5 1.57"/>
+    </joint>
+
+    <!-- Optical frame (REP 103 / standard camera optical frame) -->
+    <link name="rgb_camera_optical_frame"/>
+    <joint name="rgb_camera_optical_joint" type="fixed">
+      <parent link="rgb_camera"/>
+      <child  link="rgb_camera_optical_frame"/>
+      <!-- rotate into optical frame: x right, y down, z forward -->
+      <origin xyz="0 0 0" rpy="-1.57079632679 0 -1.57079632679"/>
+    </joint>
+
+    <!-- Gazebo Harmonic camera sensor definition.
+         Gazebo Sim reads this via sdformat_urdf and spawns a camera.
+         Bridge topics with ros_gz_bridge / ros_gz_image in your launch file.
+    -->
+    <gazebo reference="rgb_camera_link">
+      <sensor name="rgb_camera_sensor" type="camera">
+        <pose>0 0 0 0 0 0</pose>
+
+        <camera>
+          <!-- Adjust to your needs -->
+          <horizontal_fov>1.3962634</horizontal_fov> <!-- ~80 deg -->
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>50.0</far>
+          </clip>
+
+          <!-- Frame & topics used on the Gazebo side;
+               ros_gz_image / parameter_bridge will mirror them into ROS. -->
+          <optical_frame_id>rgb_camera_optical_frame</optical_frame_id>
+          <camera_info_topic>rgb_camera/camera_info</camera_info_topic>
+        </camera>
+
+        <always_on>true</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <topic>rgb_camera/image</topic>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

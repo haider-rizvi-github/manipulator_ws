@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot name="manipulator" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:property name="PI" value="3.14159"/>
+
+    <ros2_control type="system" name="RobotSystem">
+
+            <hardware>
+                <plugin>gz_ros2_control/GazeboSimSystem</plugin> <!-- Ignition Gazebo ROS2 humble control plugin -->
+            </hardware>
+
+        <!-- Joints Configuration -->
+        <joint name="basement_to_base_plate">
+            <command_interface name="position">  <!-- command interface for position control -->
+                <param name="min"> -${PI/2} </param>
+                <param name="max"> ${PI/2} </param>
+            </command_interface>
+            <state_interface name="position"/>   <!-- state interface to read the position -->
+        </joint>
+
+        <joint name="base_plate_to_forward_drive_arm">
+            <command_interface name="position">  <!-- command interface for position control -->
+                <param name="min"> -${PI/2} </param>
+                <param name="max"> ${PI/2} </param>
+            </command_interface>
+            <state_interface name="position"/>   <!-- state interface to read the position -->
+        </joint>
+
+        <joint name="forward_drive_arm_to_horizontal_arm">
+            <command_interface name="position">  <!-- command interface for position control -->
+                <param name="min"> -${PI/2} </param>
+                <param name="max"> ${PI/2} </param>
+            </command_interface>
+            <state_interface name="position"/>   <!-- state interface to read the position -->
+        </joint>
+
+        <!-- These joints are for the gripper -->
+        <joint name="claw_support_to_gripper_finger_left">
+            <command_interface name="position">  <!-- command interface for position control -->
+                <param name="min"> -${PI/2} </param>
+                <param name="max"> 0.0 </param>
+            </command_interface>
+            <state_interface name="position"/>   <!-- state interface to read the position -->
+        </joint>
+
+        <joint name="claw_support_to_gripper_finger_right">
+            <param name="mimic">claw_support_to_gripper_finger_left</param> <!-- mimic joint to follow claw_support_to_gripper_finger_left -->
+            <param name="multiplier">-1</param> <!-- inverse movement -->
+        </joint>
+        
+
+    </ros2_control>
+
+</robot>
