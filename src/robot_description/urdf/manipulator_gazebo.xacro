@@ -3,20 +3,51 @@
 
     <gazebo>
         <!-- Load proper ros2 control plugin based on simulator -->
-        <xacro:if value="$(arg is_ignition)">
-            <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionRos2ControlPlugin">
-                <parameters>
-
-                </parameters>
-            </plugin>
-
-        </xacro:if>
-        <xacro:unless value="$(arg is_ignition)">
-            <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-                <parameters>
-
-                </parameters>
-            </plugin>
-        </xacro:unless>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimRos2ControlPlugin">
+            <parameters>$(find manipulator_controller)/config/manipulator_controller.yaml</parameters>
+        </plugin>
     </gazebo>
+
+    <gazebo reference="base_link">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="base_plate">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="forward_drive_arm">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="horizontal_arm">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="claw_support">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="gripper_finger_left">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="gripper_finger_right">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
 </robot>

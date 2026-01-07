@@ -5,9 +5,9 @@
 
     <ros2_control type="system" name="RobotSystem">
 
-            <hardware>
-                <plugin>gz_ros2_control/GazeboSimSystem</plugin> <!-- Ignition Gazebo ROS2 humble control plugin -->
-            </hardware>
+        <hardware>
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin> <!-- Ignition Gazebo ROS2 humble control plugin -->
+        </hardware>
 
         <!-- Joints Configuration -->
         <joint name="basement_to_base_plate">

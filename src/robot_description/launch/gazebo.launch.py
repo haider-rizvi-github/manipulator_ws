@@ -34,25 +34,8 @@ def generate_launch_description():
         ],
     )
 
-    ros_distro = os.environ["ROS_DISTRO"]
-    is_ignition = "True" if ros_distro == "humble" else "False"
-    physics_engine = (
-        ""
-        if ros_distro == "humble"
-        else "--physics-engine gz-physics-bullet-featherstone-plugin"
-    )
-
     robot_description = ParameterValue(
-        Command(
-            [
-                "xacro",
-                " ",
-                LaunchConfiguration("model"),
-                " ",
-                "is_ignition:=",
-                LaunchConfiguration(is_ignition),
-            ]
-        ),
+        Command(["xacro ", LaunchConfiguration("model")]),
         value_type=str,  # Specify the type of the parameter value
     )
 
@@ -105,9 +88,9 @@ def generate_launch_description():
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
-            "/model/manipulator/joint_state@sensor_msgs/msg/JointState[gz.msgs.msg.ModelJointState]",
-            "/model/manipulator/pose@geometry_msgs/msg/PoseStamped[gz.msgs.msg.Pose]",
-            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.msg.Clock]",
+            "/model/manipulator/joint_state@sensor_msgs/msg/JointState[gz.msgs.msg.ModelJointState",
+            "/model/manipulator/pose@geometry_msgs/msg/PoseStamped[gz.msgs.msg.Pose",
+            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.msg.Clock",
         ],
         output="screen",
     )

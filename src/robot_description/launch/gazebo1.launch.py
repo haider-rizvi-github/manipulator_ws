@@ -37,6 +37,13 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description, "use_sim_time": True}],
     )
 
+    joint_state_pub = Node(
+        package="joint_state_publisher_gui",
+        executable="joint_state_publisher_gui",
+        parameters=[{"use_sim_time": True}],
+        output="screen",
+    )
+
     gazebo_resource_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
         value=[str(Path(robot_description_dir).parent.resolve())],
@@ -98,6 +105,7 @@ def generate_launch_description():
             model_arg,
             gazebo_resource_path,
             robot_state_publisher_node,
+            joint_state_pub,
             gazebo,
             gz_spawn_entity,
             gz_ros2_bridge,
