@@ -1,13 +1,24 @@
 <?xml version="1.0"?>
 <robot name="manipulator" xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:property name="PI" value="3.14159"/>
-
     <ros2_control type="system" name="RobotSystem">
 
-        <hardware>
-            <plugin>gz_ros2_control/GazeboSimSystem</plugin> <!-- Ignition Gazebo ROS2 humble control plugin -->
-        </hardware>
+        <xacro:property name="PI" value="3.14159"/>
+
+        <!-- ros2_control Gazebo -->
+        <!-- ROS 2 Humble -->
+        <xacro:if value="$(arg is_ignition)">
+            <hardware>
+                <plugin>ign_ros2_control/IgnitionSystem</plugin>
+            </hardware>
+        </xacro:if>
+
+        <!-- ROS 2 Iron or above -->
+        <xacro:unless value="$(arg is_ignition)">
+            <hardware>
+                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+            </hardware>
+        </xacro:unless>
 
         <!-- Joints Configuration -->
         <joint name="basement_to_base_plate">

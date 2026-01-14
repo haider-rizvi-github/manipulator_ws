@@ -16,7 +16,9 @@ controller_manager:
 
 # Controller specific parameters
 arm_controller:
+
   ros__parameters:
+
     joints:
       - basement_to_base_plate
       - base_plate_to_forward_drive_arm
@@ -31,7 +33,9 @@ arm_controller:
     allow_integration_in_goal_trajectories: true
 
 gripper_controller:
+
   ros__parameters:
+  
     joints:
       - claw_support_to_gripper_finger_left            # we dont need to add claw_support_to_gripper_finger_right as it is going to mimic claw_support_to_gripper_finger_left
 

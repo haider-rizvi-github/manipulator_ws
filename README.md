@@ -61,6 +61,61 @@ This will launch:
 - Joint State Publisher GUI for controlling joint positions
 - Robot State Publisher for publishing transforms
 
+### Launching Gazebo and Controllers 🔧
+
+1) Source your workspace (if not already sourced):
+```bash
+source install/setup.bash
+```
+
+2) Launch Gazebo with the robot (uses `robot_description` package):
+```bash
+ros2 launch robot_description gazebo1.launch.py
+```
+
+3) Start the controller manager and controllers (from the `manipulator_controller` package):
+```bash
+# launch the controller manager and spawners (recommended)
+ros2 launch manipulator_controller controller.launch.py
+```
+
+If the above launch fails (for example, due to a missing controller config file), you can spawn controllers individually:
+```bash
+ros2 run controller_manager spawner joint_state_broadcaster --controller-manager /controller_manager
+ros2 run controller_manager spawner arm_controller --controller-manager /controller_manager
+ros2 run controller_manager spawner gripper_controller --controller-manager /controller_manager
+```
+
+> Tip: I noticed the package's launch references `manipulator_controllers.yaml` but the config file present is `config/manipulator_controller.yaml`. If `controller.launch.py` fails to find its YAML, either copy/rename that file or I can update the launch file to point to the correct config.
+
+4) Useful controller and topic commands:
+
+- List controllers and their state:
+```bash
+ros2 control list_controllers
+```
+
+- List active topics:
+```bash
+ros2 topic list
+```
+
+- Publish a command to the gripper controller (example using Float64MultiArray):
+```bash
+ros2 topic pub /gripper_controller/commands std_msgs/msg/Float64MultiArray "layout:
+  dim: []
+  data_offset: 0
+data: [-1]"
+```
+
+- Echo controller topics to view messages:
+```bash
+ros2 topic echo /gripper_controller/state
+ros2 topic echo /gripper_controller/commands
+```
+
+> Note: Controller names (e.g., `gripper_controller`) and exact CLI commands can vary depending on your ROS 2 distro and controller configuration; substitute names as needed.
+
 ### Available Examples
 
 #### Python Examples

@@ -5,12 +5,11 @@
 
 <robot name="manipulator" xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <!-- <xacro:arg name="is_ignition" default="true"/>  -->
-    <!--this arg is used to load proper ros2 control plugin-->
-
+    <xacro:arg name="is_ignition" default="false"/>  <!--if using Gazebo Harmonic (default="false") and Gazebo Ignition (default="true") -->
+    
+    <!-- Including other xacro files -->
     <xacro:include filename="$(find robot_description)/urdf/manipulator_gazebo.xacro"/>
     <xacro:include filename="$(find robot_description)/urdf/manipulator_ros2_control.xacro"/>
-    <xacro:include filename="$(find robot_description)/urdf/camera.xacro"/>
 
     <!-- Creating the variables -->
     <xacro:property name="PI" value="3.14159"/>
@@ -181,7 +180,7 @@
         </collision>
     </link>
 
-     <!-- CAMERA LINK
+     <!-- CAMERA LINK     -->
     <link name="rgb_camera">
         <xacro:default_inertia mass="0.01"/>
         <visual>
@@ -200,7 +199,6 @@
             </geometry>
         </collision>
     </link>
-    -->
 
  <!-- Defining the joints between the links -->
 
@@ -265,12 +263,12 @@
         <limit lower="-${PI/2}" upper="0.0" effort="${effort}" velocity="${velocity}"/>
     </joint>
 
-    <!-- base_link to rgb_camera joint 
+    <!-- base_link to rgb_camera joint --> 
     <joint name="rgb_camera_joint" type="fixed">
         <parent link="base_link"/>
         <child link="rgb_camera"/>
         <origin xyz="0.0 0.45 0.2" rpy="0 -0.5 1.57"/>
     </joint>
-    -->
+
     
 </robot>
