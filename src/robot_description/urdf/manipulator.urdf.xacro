@@ -257,7 +257,7 @@
     <joint name="claw_support_to_gripper_finger_right" type="revolute">
         <parent link="claw_support"/>
         <child link="gripper_finger_right"/>    
-        <origin xyz="0.04 0.13 -0.01" rpy="0 0 0"/>
+        <origin xyz="-0.048 0.13 -0.1" rpy="0 0 0"/>
         <axis xyz="0 0 1"/> <!-- Rotation around Z-axis --> 
         <mimic joint="claw_support_to_gripper_finger_left" multiplier="-1.0"/>
         <limit lower="-${PI/2}" upper="0.0" effort="${effort}" velocity="${velocity}"/>

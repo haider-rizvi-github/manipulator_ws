@@ -47,6 +47,13 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description, "use_sim_time": True}],
     )
 
+    # Specify the world file path
+    world_arg = os.path.join(
+        get_package_share_directory("robot_description"),
+        "world",
+        "manipulator_world.sdf",
+    )
+
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -54,7 +61,7 @@ def generate_launch_description():
                 "/gz_sim.launch.py",
             ]
         ),
-        launch_arguments=[("gz_args", [" -v 4 -r empty.sdf"])],
+        launch_arguments={"gz_args": f"-v 4 -r {world_arg}"}.items(),
     )
 
     gz_spawn_entity = Node(
