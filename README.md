@@ -1,99 +1,69 @@
-# Robot Manipulator Project
+# Manipulator Robot Simulation
 
-This repository contains a ROS2 project for a robot manipulator with visualization capabilities. The project includes both C++ and Python examples for simple publisher subscriber and parameter, along with a complete URDF description of the robot.
+This project contains the ROS 2 packages to simulate a manipulator robot in Gazebo. It includes the robot description (URDF), controllers, and a bringup launch file to start the simulation.
 
-## Project Structure
+## Dependencies
 
-```
-├── arduinobot_cpp_examples/    # C++ implementation examples
-├── arduinobot_py_examples/     # Python implementation examples
-└── robot_description/          # Robot URDF and mesh files
-```
+*   ROS 2 Humble Hawksbill
+*   Gazebo (Ignition Gazebo Fortress)
+*   `ros-humble-ros-gz` package
 
-## Prerequisites
+## Build Instructions
 
-Before running this project, ensure you have the following dependencies installed:
+1.  Source your ROS 2 installation:
+    ```bash
+    source /opt/ros/humble/setup.bash
+    ```
 
-### System Requirements
-- Ubuntu 22.04 or later
-- ROS2 Jazzy
-- Python 3.8+
+2.  Build the workspace:
+    ```bash
+    colcon build
+    ```
 
-### ROS2 Dependencies
+## Running the Simulation
+
+1.  Source the workspace:
+    ```bash
+    source install/setup.bash
+    ```
+
+2.  Launch the simulation:
+    ```bash
+    ros2 launch manipulator_bringup bringup.launch.py
+    ```
+    This will start Gazebo, spawn the robot, and launch the necessary controllers.
+
+## Controlling the Robot
+
+You can control the robot's arm from the terminal by publishing a `JointTrajectory` message to the `/arm_controller/joint_trajectory` topic.
+
+Here is a demo command to move the arm to a new position:
+
 ```bash
-sudo apt update
-sudo apt install -y \
-    ros-jazzy-xacro \
-    ros-jazzy-joint-state-publisher-gui \
-    ros-jazzy-robot-state-publisher \
-    ros-jazzy-rviz2
+ros2 topic pub --once /arm_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory '{
+  "header": {
+    "stamp": {
+      "sec": 0,
+      "nanosec": 0
+    },
+    "frame_id": ""
+  },
+  "joint_names": [
+    "basement_to_base_plate",
+    "base_plate_to_forward_drive_arm",
+    "forward_drive_arm_to_horizontal_arm"
+  ],
+  "points": [
+    {
+      "positions": [0.5, 0.5, 0.5],
+      "velocities": [],
+      "accelerations": [],
+      "effort": [],
+      "time_from_start": {
+        "sec": 2,
+        "nanosec": 0
+      }
+    }
+  ]
+}'
 ```
-
-## Installation
-
-1. Clone this repository:
-```bash
-git clone https://github.com/haider-rizvi-github/manipulator_ws
-```
-
-2. Build the workspace:
-```bash
-cd ~/manipulator_ws
-colcon build
-```
-
-3. Source the workspace:
-```bash
-source install/setup.bash
-```
-
-## Usage
-
-### Launching the Robot Visualization
-
-To visualize the robot in RViz:
-```bash
-ros2 launch robot_description display.launch.py
-```
-
-This will launch:
-- RViz for visualization
-- Joint State Publisher GUI for controlling joint positions
-- Robot State Publisher for publishing transforms
-
-### Available Examples
-
-#### Python Examples
-- Simple Publisher
-- Simple Subscriber
-- Simple Parameter
-
-To run Python examples:
-```bash
-ros2 run arduinobot_py_examples simple_publsiher
-ros2 run arduinobot_py_examples simple_subscriber
-ros2 run arduinobot_py_examples simple_parameter
-```
-
-## Robot Description
-
-The robot is a 5-DOF manipulator with a gripper end-effector. The URDF description includes:
-- Base link and plate
-- Forward drive arm
-- Horizontal arm
-- Claw support
-- Gripper fingers (left and right)
-
-Joint configuration:
-- Base rotation (±90 degrees)
-- Forward arm rotation (±90 degrees)
-- Horizontal arm rotation (±90 degrees)
-- Gripper control
-
-## Contributing
-
-Feel free to open issues and pull requests for any improvements or bug fixes.
-
-## Acknowledgments
-
-- ROS2 Community
