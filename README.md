@@ -39,13 +39,10 @@ You can control the robot's arm from the terminal by publishing a `JointTrajecto
 
 Here is a demo command to move the arm to a new position:
 
+Test the Arm Joints
 ```bash
 ros2 topic pub --once /arm_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory '{
   "header": {
-    "stamp": {
-      "sec": 0,
-      "nanosec": 0
-    },
     "frame_id": ""
   },
   "joint_names": [
@@ -55,7 +52,30 @@ ros2 topic pub --once /arm_controller/joint_trajectory trajectory_msgs/msg/Joint
   ],
   "points": [
     {
-      "positions": [0.5, 0.5, 0.5],
+      "positions": [-0.5, -0.5, -0.5],
+      "velocities": [],
+      "accelerations": [],
+      "effort": [],
+      "time_from_start": {
+        "sec": 2,
+        "nanosec": 0
+      }
+    }
+  ]
+}'
+```
+Test the Gripper
+```bash
+ros2 topic pub --once /gripper_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory '{
+  "header": {
+    "frame_id": ""
+  },
+  "joint_names": [
+    "claw_support_to_gripper_finger_left"
+  ],
+  "points": [
+    {
+      "positions": [0.7], 
       "velocities": [],
       "accelerations": [],
       "effort": [],
