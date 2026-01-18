@@ -37,11 +37,54 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description, "use_sim_time": True}],
     )
 
-    joint_state_pub = Node(
+    joint_state_pub_gui_node = Node(
         package="joint_state_publisher_gui",
         executable="joint_state_publisher_gui",
         parameters=[{"use_sim_time": True}],
         output="screen",
+    )
+# ADDED CONTROLLER MANAGER
+    controller_manager = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[
+            {"robot_description": robot_description,
+            },
+            os.path.join(
+                get_package_share_directory("manipulator_controller"),
+                "config",
+                "manipulator_controller.yaml",
+            ),
+        ],
+    )
+
+# LOADING THE 'arm_controller' defined in manipulator_controller.yaml
+    arm_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["arm_controller", "--controller-manager", "/controller_manager"],
+        parameters=[{"use_sim_time": True}],
+    )
+
+# LOADING THE 'gripper_controller' defined in manipulator_controller.yaml
+    gripper_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["gripper_controller", "--controller-manager", "/controller_manager"],
+        parameters=[{"use_sim_time": True}],
+    )
+
+
+# ADDED JOIN STATE BROADCASTER
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
+            "joint_state_broadcaster",
+            "--controller-manager",
+            "/controller_manager",
+        ],
+        parameters=[{"use_sim_time": True}],
     )
 
     gazebo_resource_path = SetEnvironmentVariable(
@@ -105,10 +148,14 @@ def generate_launch_description():
             model_arg,
             gazebo_resource_path,
             robot_state_publisher_node,
-            joint_state_pub,
+            joint_state_pub_gui_node,
+            joint_state_broadcaster_spawner,
             gazebo,
             gz_spawn_entity,
             gz_ros2_bridge,
             rviz2_node,
+            controller_manager,
+            arm_controller_spawner,
+            
         ]
     )
