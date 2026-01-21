@@ -132,7 +132,7 @@ ros2 run arduinobot_py_examples simple_parameter
 
 ## Robot Description
 
-The robot is a 5-DOF manipulator with a gripper end-effector. The URDF description includes:
+The robot is a 3-DOF manipulator with a gripper end-effector. The URDF description includes:
 - Base link and plate
 - Forward drive arm
 - Horizontal arm
