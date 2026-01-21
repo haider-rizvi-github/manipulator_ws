@@ -43,3 +43,17 @@ ros2 service call /add_two_ints manipulator_msgs/srv/AddTwoints "{a: 7, b: 5}"
   ```bash
   ros2 service call /add_two_ints manipulator_msgs/srv/AddTwoints
   ```
+
+## Simple Service Client
+
+The `simple_service_client.py` file implements a ROS2 service client that sends a request to add two integers to the `add_two_ints` service.
+
+### Running the Service Client
+
+To run the service client with specific values (e.g., a=7, b=5):
+
+```bash
+ros2 run arduinobot_py_examples simple_service_client 7 5
+```
+
+**Note**: The service server must be running for the client to work. Start the server first with `ros2 run arduinobot_py_examples simple_service_server`.
