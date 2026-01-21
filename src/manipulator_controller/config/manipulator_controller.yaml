@@ -8,8 +8,8 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
     gripper_controller:
-      #type: joint_trajectory_controller/JointTrajectoryController
-      type: forward_command_controller/ForwardCommandController
+      type: joint_trajectory_controller/JointTrajectoryController
+      #type: forward_command_controller/ForwardCommandController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -42,10 +42,10 @@ gripper_controller:
     interface_name: position
       
 
-   # command_interfaces:
-   #   - position
-   # state_interfaces:
-   #   - position
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
 
-   # open_loop_control: true                      # it is because a real motor wil not be able provide the position of the robot
-   # allow_integration_in_goal_trajectories: true
+    open_loop_control: true                      # it is because a real motor wil not be able provide the position of the robot
+    allow_integration_in_goal_trajectories: true

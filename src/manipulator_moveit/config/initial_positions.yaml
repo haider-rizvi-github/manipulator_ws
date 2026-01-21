@@ -1,0 +1,9 @@
+initial_position:
+  basement_to_base_plate: 0  
+  base_plate_to_forward_drive_arm: 0
+  forward_drive_arm_to_horizontal_arm: 0
+  claw_support_to_gripper_finger_left: 0
+  claw_support_to_gripper_finger_right: 0
+
+
+  # these are moveable joints

@@ -1,0 +1,25 @@
+# we will connect this file to the ros2 controller manager
+
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+moveit_simple_controller_manager:
+  controller_names:
+    - arm_controller
+    - gripper_controller
+
+  arm_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - basement_to_base_plate
+      - base_plate_to_forward_drive_arm
+      - forward_drive_arm_to_horizontal_arm
+
+  gripper_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: false
+    joints:
+      - claw_support_to_gripper_finger_left
+      - claw_support_to_gripper_finger_right  # mimic the left finger movement
