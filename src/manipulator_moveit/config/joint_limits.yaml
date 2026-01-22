@@ -1,7 +1,7 @@
 default_velocity_scaling_factor: 0.1
 default_acceleration_scaling_factor: 0.1
 
-joint limits:
+joint_limits:
   basement_to_base_plate:
     has_velocity_limits: true
     max_velocity: 10.0
