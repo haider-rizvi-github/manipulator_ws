@@ -1,0 +1,30 @@
+planning_plugin: pilz_industrial_motion_planner/CommandPlanner
+request_adapters: >-
+  default_planner_request_adapters/AddTimeOptimalParameterization
+  default_planner_request_adapters/ResolveConstraintFrames
+  default_planner_request_adapters/ValidateWorkspaceBounds
+  default_planner_request_adapters/CheckStartStateBounds
+  default_planner_request_adapters/CheckStartStateCollision
+start_state_max_bounds_error: 0.1
+planner_configs:
+  LIN:
+    type: geometric::LIN
+    planning_time_limit: 10.0
+    max_iterations: 200.0
+    max_iterations_after_collision_free: 5.0
+  PTP:
+    type: geometric::PTP
+    planning_time_limit: 10.0
+    max_iterations: 200.0
+    max_iterations_after_collision_free: 5.0
+  CIRC:
+    type: geometric::CIRC
+    planning_time_limit: 10.0
+    max_iterations: 200.0
+    max_iterations_after_collision_free: 5.0
+arm_group:
+  default_planner_config: PTP
+  planner_configs:
+    - LIN
+    - PTP
+    - CIRC

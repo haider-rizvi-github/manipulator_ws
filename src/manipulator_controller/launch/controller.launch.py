@@ -32,7 +32,7 @@ def generate_launch_description():
             {"robot_description": robot_description},
             # {"use_sim_time": LaunchConfiguration("use_sim_time")},
         ],
-    )
+    )  # not including node in node list to avoid duplication
 
     # Add the controller_manager node and give it the robot_description parameter and the path to the manipulator_controllers.yaml file
     controller_manager = Node(
@@ -85,7 +85,6 @@ def generate_launch_description():
     return LaunchDescription(
         [
             # add the nodes to the launch description
-            robot_state_publisher,
             controller_manager,
             joint_state_broadcaster_spawner,
             arm_controller_spawner,
