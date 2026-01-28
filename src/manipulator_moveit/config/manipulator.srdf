@@ -21,11 +21,11 @@
     <!-- we need to define the starting configuration -->
 
     <group_state name="home" group="arm_group">
-        <joint name="virtual_joint" value="0" />
+        <!-- <joint name="virtual_joint" value="0" /> -->
         <joint name="basement_to_base_plate" value="0" />
         <joint name="base_plate_to_forward_drive_arm" value="0" />
         <joint name="forward_drive_arm_to_horizontal_arm" value="0" />
-        <joint name="horizontal_arm_to_claw_support" value="0" />
+        <!-- <joint name="horizontal_arm_to_claw_support" value="0" /> -->
     </group_state>
 
     <group_state name="home" group="gripper_group">
@@ -33,18 +33,16 @@
         <!-- we dont need to set the joint for right finger because it is mimicing left finger as stated in ros2 control-->
     </group_state>
 
-    <disable_collisions>
-        <pair link1="base_link" link2="base_plate" reason="Adjacent"/>
-        <pair link1="base_link" link2="forward_drive_arm" reason="Never"/>
-        <pair link1="base_plate" link2="forward_drive_arm" reason="Never"/>
-        <pair link1="claw_support" link2="forward_drive_arm" reason="Never"/>
-        <pair link1="claw_support" link2="gripper_finger_left" reason="Never"/> 
-        <pair link1="claw_support" link2="gripper_finger_right" reason="Never"/>
-        <pair link1="forward_drive_arm" link2="gripper_finger_left" reason="Never"/>  
-        <pair link1="forward_drive_arm" link2="gripper_finger_right" reason="Never"/>
-        <pair link1="forward_drive_arm" link2="horizontal_arm" reason="Never"/>
-        <pair link1="gripper_finger_right" link2="horizontal_arm" reason="Never"/>
-        <pair link1="gripper_finger_left" link2="gripper_finger_right" reason="Never"/>
-    </disable_collisions>
+    <disable_collisions link1="base_link" link2="base_plate" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="forward_drive_arm" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="forward_drive_arm" reason="Never"/>
+    <disable_collisions link1="claw_support" link2="forward_drive_arm" reason="Never"/>
+    <disable_collisions link1="claw_support" link2="gripper_finger_left" reason="Never"/>
+    <disable_collisions link1="claw_support" link2="gripper_finger_right" reason="Never"/>
+    <disable_collisions link1="forward_drive_arm" link2="gripper_finger_left" reason="Never"/>
+    <disable_collisions link1="forward_drive_arm" link2="gripper_finger_right" reason="Never"/>
+    <disable_collisions link1="forward_drive_arm" link2="horizontal_arm" reason="Never"/>
+    <disable_collisions link1="gripper_finger_right" link2="horizontal_arm" reason="Never"/>
+    <disable_collisions link1="gripper_finger_left" link2="gripper_finger_right" reason="Never"/>
 
 </robot>

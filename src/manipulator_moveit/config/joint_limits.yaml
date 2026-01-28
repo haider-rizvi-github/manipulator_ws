@@ -5,25 +5,25 @@ joint_limits:
   basement_to_base_plate:
     has_velocity_limits: true
     max_velocity: 10.0
-    has_acceleration_limits: false  
-    max_acceleration: 0.0
+    has_acceleration_limits: true 
+    max_acceleration: 5.0
   base_plate_to_forward_drive_arm:
     has_velocity_limits: true
     max_velocity: 10.0
-    has_acceleration_limits: false
-    max_acceleration: 0.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
   forward_drive_arm_to_horizontal_arm:
     has_velocity_limits: true
     max_velocity: 10.0
-    has_acceleration_limits: false
-    max_acceleration: 0.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
   claw_support_to_gripper_finger_left:
     has_velocity_limits: true
     max_velocity: 10.0
-    has_acceleration_limits: false
-    max_acceleration: 0.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
   claw_support_to_gripper_finger_right:
     has_velocity_limits: true
     max_velocity: 10.0
-    has_acceleration_limits: false
-    max_acceleration: 0.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
