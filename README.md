@@ -129,6 +129,52 @@ ros2 run arduinobot_py_examples simple_publsiher
 ros2 run arduinobot_py_examples simple_subscriber
 ros2 run arduinobot_py_examples simple_parameter
 ```
+## manipulator_remote Package
+
+The workspace includes a package named `manipulator_remote`, which provides a task-based control interface for the robot manipulator using ROS 2 Actions.
+
+### Task Server
+
+The file `task_server.py` implements a ROS 2 Action Server that listens on the `/task_server` action topic.  
+It receives a `ManipulatorTask` goal containing a `task_number` and executes the corresponding predefined task.
+
+Supported task numbers:
+- `0`
+- `1`
+- `2`
+
+Each task number triggers a different predefined behavior of the manipulator.
+
+### Launch File
+
+The launch file `remote_interface.launch.py` starts the task server node and enables remote task execution.
+
+---
+
+## Running the System with Remote Tasks
+
+Start the system in the following order, using separate terminals.
+
+### 1. Launch Gazebo
+```bash
+ros2 launch robot_description gazebo1.launch.py
+
+2. Start Controllers
+ros2 launch manipulator_controller controller.launch.py
+
+3. Launch MoveIt
+ros2 launch manipulator_moveit moveit.launch.py
+
+4. Start the Remote Task Interface
+ros2 launch manipulator_remote remote_interface.launch.py
+
+5. Send a Task Goal
+ros2 action send_goal /task_server manipulator_msgs/action/ManipulatorTask "task_number: 2"
+
+Replace 2 with 0 or 1 to execute a different task.
+
+
+
 
 ## Robot Description
 

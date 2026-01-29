@@ -19,7 +19,7 @@ moveit_simple_controller_manager:
   gripper_controller:
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
-    default: false
+    default: true
     joints:
       - claw_support_to_gripper_finger_left
       - claw_support_to_gripper_finger_right  # mimic the left finger movement

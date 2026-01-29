@@ -18,6 +18,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/QuaternionToEuler.srv"
   "srv/EulerToQuaternion.srv"
   "action/Fibonacci.action"
+  "action/ManipulatorTask.action"
   DEPENDENCIES std_msgs
 )
 if(BUILD_TESTING)
