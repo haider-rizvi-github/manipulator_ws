@@ -9,7 +9,7 @@ This workspace contains ROS2 packages for controlling and simulating an Arduino-
 - **manipulator_moveit**: MoveIt motion planning configuration and launch files
 - **manipulator_msgs**: Custom ROS2 message and action definitions
 - **manipulator_utils**: Utility functions for angle conversions
-- **arduinobot_cpp_examples**: C++ example nodes
+- **
 - **arduinobot_py_examples**: Python example nodes and scripts
 
 ## Launching the Manipulator with MoveIt Interface
@@ -102,33 +102,52 @@ Ensure you have installed:
 - ros2_control
 - ros2_controllers
 
-## Install dependencies
+## Install Dependencies
 
-- System & ROS deps (best-effort):
+For detailed ROS2 Jazzy dependency installation instructions, see [INSTALL_ROS2_DEPENDENCIES.md](INSTALL_ROS2_DEPENDENCIES.md).
 
-  Run the installer script from the workspace root (requires sudo):
+### Quick Install (Automated)
+
+From the workspace root, run the installer script:
 
 ```bash
 sudo ./install_dependencies.sh
 ```
 
-  The script runs `rosdep` over `src/` and attempts to `apt`-install common ROS packages (MoveIt, tf2, ros2_control, robot_state_publisher, rviz2, xacro, ros-gz bridge, etc.).
+This installs:
+- System & ROS2 packages (xacro, joint_state_publisher_gui, robot_state_publisher, rviz2, MoveIt, tf2, ros2_control, etc.)
+- Python dependencies (Flask, Ask SDK, numpy, requests, aiohttp, boto3, etc.)
 
-- Python requirements (pip):
+### Manual Install
 
-  From the workspace root, install Python libraries used by the Alexa interface and other Python nodes:
+**ROS2 System Packages:**
 
 ```bash
-pip3 install -r ../requirements.txt
+sudo apt update
+sudo apt install -y \
+    ros-jazzy-xacro \
+    ros-jazzy-joint-state-publisher-gui \
+    ros-jazzy-robot-state-publisher \
+    ros-jazzy-rviz2 \
+    ros-jazzy-moveit \
+    ros-jazzy-moveit-ros \
+    ros-jazzy-tf2-ros \
+    ros-jazzy-ros2-control \
+    ros-jazzy-ros2-controllers \
+    ros-jazzy-urdf \
+    ros-jazzy-ros-gz-sim \
+    ros-jazzy-ros-gz-bridge
 ```
 
-  (Or if calling from the workspace root):
+**Python Requirements:**
+
+From the workspace root:
 
 ```bash
 pip3 install -r requirements.txt
 ```
 
-  This installs `flask`, `flask-ask-sdk`, `ask-sdk-core`, `ask-sdk-model`, `numpy`, `requests`, `aiohttp`, `boto3`, and test tools.
+This installs `flask`, `flask-ask-sdk`, `ask-sdk-core`, `ask-sdk-model`, `numpy`, `requests`, `aiohttp`, `boto3`, and test tools.
 
 
 ## Notes
