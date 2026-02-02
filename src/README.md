@@ -145,3 +145,8 @@ ros2 launch manipulator_bringup simulated_robot.launch.py
   - Start `ngrok` before launching the bringup so the skill endpoint is reachable.
   - Keep the terminal running `ngrok` and the bringup launch open while testing the skill.
   - If your skill uses a different port, replace `5000` in the `ngrok` command accordingly.
+
+- **Future Work**:
+  - Integrate a camera with gazebo as it already have a camera urdf.
+  - Apply object detection algorithm and make the robot work accordingly.
+  - Build a suitable world for the manipulator.
