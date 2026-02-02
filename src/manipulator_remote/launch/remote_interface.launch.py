@@ -10,11 +10,11 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-    is_sim_arg = DeclareLaunchArgument("is_sim", default_value="True")
+    # is_sim_arg = DeclareLaunchArgument("is_sim", default_value="True")
 
-    use_python_arg = DeclareLaunchArgument("use_python", default_value="True")
+    # use_python_arg = DeclareLaunchArgument("use_python", default_value="True")
     is_sim = LaunchConfiguration("is_sim")
-    use_python = LaunchConfiguration("use_python")
+    # use_python = LaunchConfiguration("use_python")
 
     # Build the MoveIt configuration using MoveItConfigsBuilder
     moveit_config = (
@@ -56,21 +56,28 @@ def generate_launch_description():
     )
 
     # Give Created Action Server Here
-    remote_interface_node = Node(
+    task_server_node = Node(
         package="manipulator_remote",
         executable="task_server.py",
-        condition=IfCondition(use_python),
-        output="screen",
         parameters=[
             moveit_config.to_dict(),
             {"use_sim_time": is_sim},
         ],
     )
 
+    alexa_interface_node = Node(
+        package="manipulator_remote",
+        executable="alexa_interface.py",
+        parameters=[
+            {"use_sim_time": is_sim},
+        ],
+    )
+
     return LaunchDescription(
         [
-            use_python_arg,
-            is_sim_arg,
-            remote_interface_node,
+            # use_python_arg,
+            # is_sim_arg,
+            task_server_node,
+            alexa_interface_node,
         ]
     )
