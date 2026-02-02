@@ -1,0 +1,14 @@
+
+flask>=2.0
+flask-ask-sdk>=1.0.0
+# pin Ask SDK to the latest compatible release available on PyPI
+ask-sdk-core==1.19.0
+ask-sdk-model==1.19.0
+numpy>=1.23
+requests>=2.28
+aiohttp>=3.8
+boto3>=1.26
+setuptools
+pytest
+setuptools
+pytest
